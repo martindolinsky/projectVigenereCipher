@@ -40,49 +40,56 @@ public class MyFile {
 	}
 
 	public void hash(String source, String target, String key) {
+
 		try {
 			File myFile = new File(source);
 			File otherFile = new File(target);
-			FileWriter write = new FileWriter(target);
-			FileReader fr = new FileReader(source);
-			BufferedReader read = new BufferedReader(fr);
-			int data;
+			Scanner read = new Scanner(myFile);
+			String data = null;
+			ArrayList<Character> list = new ArrayList();
 
+			ArrayList<Character> keyArray = new ArrayList();
+			ArrayList<Character> resultList = new ArrayList();
 
-			if (!key.equals("")) {
-				char[] array = key.toCharArray();
-				List list = new ArrayList();
-
-				while ((data = read.read()) != -1) { //123.,?
-//					for (int i = 0; i < key.length(); i++) {
-//						data = String.valueOf(data).charAt(i);
-//						data = (char) (data + ('M' - 'A'));
-//						if (data > 'Z') {
-//							data = (char) (data -  26);
-//						}
-//					}
-
-					if (data >= 32 && data <= 64) {
-						write.write(data);
-					}
-					if (data >= 65 && data <= 90) { // ABC
-						if (data >= 88) {
-							data = data - 26;
-						}
-						write.write((char) (data) + 3);
-					}
-					if (data > 96 && data < 123) { //abc
-						if (data > 119) {
-							data = data - 26;
-						}
-						write.write((char) (data) + 3);
-					}
-				}
+			for (int i = 0; i < key.length(); i++) {
+				keyArray.add(Character.toUpperCase(key.charAt(i)));
 			}
 
+			System.out.println(keyArray);
 
+			int count = 0;
+
+			if (!key.equals("")) {
+				while (read.hasNextLine()) { //123.,?
+					data = read.nextLine();
+				}
+				for (int i = 0; i < data.length(); i++) {
+					list.add(data.charAt(i));
+				}
+				for (int i = 0; i < key.length(); i++) {
+					keyArray.add(Character.toUpperCase(key.charAt(i)));
+				}
+				for (int i = 0; i < list.size(); i++) {
+					if (count == keyArray.size()) {
+						count = 0;
+					}
+					int value = (int) list.get(i);
+					if (value < 91 && value > 64 || value < 123 && value > 96) {
+						resultList.add((char) (list.get(i) + keyArray.get(count)));
+						count++;
+					} else {
+						resultList.add(list.get(i));
+					}
+				}
+				String result = "";
+				for (int i = 0; i < resultList.size(); i++) {
+					result += String.valueOf(resultList.get(i));
+				}
+				System.out.println(list);
+				System.out.println(resultList);
+				System.out.println(result);
+			}
 			read.close();
-			write.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

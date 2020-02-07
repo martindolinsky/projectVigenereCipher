@@ -15,8 +15,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
         MyFile myFile = new MyFile();
-        System.out.println(myFile.readFile("src/data.txt"));
-        myFile.hash("src/data.txt","src/data_encrypt.txt","abc");
+        //System.out.println(myFile.readFile("src/data.txt"));
+        myFile.hash("src/data.txt","src/data_encrypt.txt","ahoj");
     }
 
 
