@@ -11,12 +11,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("Vigenre Cipher");
+        primaryStage.setScene(new Scene(root, 450, 275));
         primaryStage.show();
-        MyFile myFile = new MyFile();
-        //System.out.println(myFile.readFile("src/data.txt"));
-        myFile.hash("src/data.txt","src/data_encrypt.txt","ahoj");
+        MyFile myFile = new MyFile("src/data.txt","src");
+		System.out.println(new VigenereCipher().encrypt("ZeBrA","/Users/martindolinsky/Downloads/projectVigenereCipher/src/data.txt"));
+		System.out.println(new VigenereCipher().decrypt("zEbRa","/Users/martindolinsky/Downloads/projectVigenereCipher/src/data_encrypt.txt"));
     }
 
 

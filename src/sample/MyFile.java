@@ -1,97 +1,43 @@
 package sample;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 /**
  * @author Martin Dolinsky
  */
 public class MyFile {
+	private String sourceFile;
+	private String parentDirectory;
+
+	public MyFile(String sourceFile, String parentDirectory) {
+		this.sourceFile = sourceFile;
+		this.parentDirectory = parentDirectory;
+	}
+
+	public String getSourceFile() {
+		return sourceFile;
+	}
+
+	public String getParentDirectory() {
+		return parentDirectory;
+	}
 
 	public String readFile(String sourceFile) {
-		String data = "";
-		try {
-			File myFile = new File(sourceFile);
-			Scanner myReader = new Scanner(myFile);
-			while (myReader.hasNextLine()) {
-				data = myReader.nextLine();
-
+		StringBuilder data = new StringBuilder();
+		try{
+			File file = new File(sourceFile);
+			Scanner sc = new Scanner(file);
+			while(sc.hasNextLine()){
+				data.append("\n").append(sc.nextLine());
 			}
-			myReader.close();
-		}
-		catch (FileNotFoundException e) {
+			sc.close();
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		return data;
+		return data.toString();
 	}
 
-	public void writeToFile(String sourceFile, String file) throws IOException {
-		try {
-			File newFile = new File(file);
-			FileWriter write = new FileWriter(newFile);
-			write.write(readFile(sourceFile));
-			write.close();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
-	public void hash(String source, String target, String key) {
-
-		try {
-			File myFile = new File(source);
-			File otherFile = new File(target);
-			Scanner read = new Scanner(myFile);
-			String data = null;
-			ArrayList<Character> list = new ArrayList();
-
-			ArrayList<Character> keyArray = new ArrayList();
-			ArrayList<Character> resultList = new ArrayList();
-
-			for (int i = 0; i < key.length(); i++) {
-				keyArray.add(Character.toUpperCase(key.charAt(i)));
-			}
-
-			System.out.println(keyArray);
-
-			int count = 0;
-
-			if (!key.equals("")) {
-				while (read.hasNextLine()) { //123.,?
-					data = read.nextLine();
-				}
-				for (int i = 0; i < data.length(); i++) {
-					list.add(data.charAt(i));
-				}
-				for (int i = 0; i < key.length(); i++) {
-					keyArray.add(Character.toUpperCase(key.charAt(i)));
-				}
-				for (int i = 0; i < list.size(); i++) {
-					if (count == keyArray.size()) {
-						count = 0;
-					}
-					int value = (int) list.get(i);
-					if (value < 91 && value > 64 || value < 123 && value > 96) {
-						resultList.add((char) (list.get(i) + keyArray.get(count)));
-						count++;
-					} else {
-						resultList.add(list.get(i));
-					}
-				}
-				String result = "";
-				for (int i = 0; i < resultList.size(); i++) {
-					result += String.valueOf(resultList.get(i));
-				}
-				System.out.println(list);
-				System.out.println(resultList);
-				System.out.println(result);
-			}
-			read.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }
